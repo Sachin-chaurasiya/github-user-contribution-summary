@@ -6,7 +6,11 @@ A library with utilities to get the GitHub user contribution summary by username
 
 ## Usage
 
-1. With ES6
+1. Codesandbox example
+
+[github-user-contribution-summary](https://codesandbox.io/embed/determined-monad-gjxyqd?fontsize=14&hidenavigation=1&theme=dark)
+
+2. With ES6
 
 ```js
 import { getContributionSummary } from 'github-user-contribution-summary';
@@ -83,7 +87,7 @@ getUserContributionSummary();
 }
 ```
 
-2. With CommonJs
+3. With CommonJs
 
 ```js
 const  { getContributionSummary } = require('github-user-contribution-summary');
