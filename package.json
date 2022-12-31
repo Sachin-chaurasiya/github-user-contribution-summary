@@ -1,0 +1,33 @@
+{
+  "name": "github-user-contribution-summary",
+  "version": "0.0.0",
+  "description": "A library with utilities to get the GitHub user contribution summary by username.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sachin-chaurasiya/github-user-contribution-summary.git"
+  },
+  "keywords": [
+    "Github",
+    "github",
+    "contribution"
+  ],
+  "author": "Sachin Chaurasiya <sachinchaurasiyachotey87@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sachin-chaurasiya/github-user-contribution-summary/issues"
+  },
+  "homepage": "https://github.com/Sachin-chaurasiya/github-user-contribution-summary#readme",
+  "devDependencies": {
+    "axios": "^1.2.2",
+    "typescript": "^4.9.4"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
