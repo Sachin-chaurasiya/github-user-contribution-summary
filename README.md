@@ -2,6 +2,8 @@
 
 A library with utilities to get the GitHub user contribution summary by username.
 
+> To get your personal access token you can refer this guide [creating-a-personal-access-token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+
 ## Usage
 
 1. With ES6
