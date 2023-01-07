@@ -4,9 +4,21 @@ A library with utilities to get the GitHub user contribution summary by username
 
 > To get your personal access token you can refer this guide [creating-a-personal-access-token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
+## Installation
+
+```bash
+npm install github-user-contribution-summary
+
+#OR
+
+yarn add github-user-contribution-summary
+```
+
 ## Usage
 
-1. With ES6
+### With ES6
+
+#### ContributionSummary
 
 ```js
 import { getContributionSummary } from 'github-user-contribution-summary';
@@ -39,38 +51,7 @@ getUserContributionSummary();
             "contributionCount": 5,
             "date": "2022-11-18"
         },
-        {
-            "contributionCount": 14,
-            "date": "2022-11-19"
-        },
-        {
-            "contributionCount": 17,
-            "date": "2022-11-20"
-        },
-        {
-            "contributionCount": 19,
-            "date": "2022-11-21"
-        },
-        {
-            "contributionCount": 15,
-            "date": "2022-11-22"
-        },
-        {
-            "contributionCount": 19,
-            "date": "2022-11-23"
-        },
-        {
-            "contributionCount": 1,
-            "date": "2022-11-24"
-        },
-        {
-            "contributionCount": 14,
-            "date": "2022-11-25"
-        },
-        {
-            "contributionCount": 7,
-            "date": "2022-11-26"
-        },
+        ...
      ],
     "totalPullRequests": 705,
     "totalIssues": 316,
@@ -83,7 +64,9 @@ getUserContributionSummary();
 }
 ```
 
-2. With CommonJs
+### With CommonJs
+
+#### ContributionSummary
 
 ```js
 const  { getContributionSummary } = require('github-user-contribution-summary');
@@ -116,38 +99,7 @@ getUserContributionSummary();
             "contributionCount": 5,
             "date": "2022-11-18"
         },
-        {
-            "contributionCount": 14,
-            "date": "2022-11-19"
-        },
-        {
-            "contributionCount": 17,
-            "date": "2022-11-20"
-        },
-        {
-            "contributionCount": 19,
-            "date": "2022-11-21"
-        },
-        {
-            "contributionCount": 15,
-            "date": "2022-11-22"
-        },
-        {
-            "contributionCount": 19,
-            "date": "2022-11-23"
-        },
-        {
-            "contributionCount": 1,
-            "date": "2022-11-24"
-        },
-        {
-            "contributionCount": 14,
-            "date": "2022-11-25"
-        },
-        {
-            "contributionCount": 7,
-            "date": "2022-11-26"
-        },
+        ...
      ],
     "totalPullRequests": 705,
     "totalIssues": 316,

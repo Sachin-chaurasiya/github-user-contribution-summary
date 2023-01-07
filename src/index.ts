@@ -1,5 +1,21 @@
 import axios from 'axios';
+import {
+  GITHUB_USER_RESOURCE_QUERY,
+  NAME_PLACEHOLDER,
+  BASE_URL,
+  GITHUB_PULL_REQUEST_COUNT_BY_STATE,
+  GITHUB_ISSUE_COUNT_BY_STATE,
+} from './constants';
 
+// Axios Instance
+const API_CLIENT = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Types Start
 export interface ContributionDays {
   contributionCount: number;
   date: string;
@@ -140,20 +156,29 @@ export interface FunctionParam {
   githubToken: string;
 }
 
-import {
-  GITHUB_USER_RESOURCE_QUERY,
-  NAME_PLACEHOLDER,
-  BASE_URL,
-} from './constants';
+export interface ResourceCount {
+  count: number;
+  state: PullRequestState | IssueState;
+}
 
-// Axios Instance
-const API_CLIENT = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+export enum PullRequestState {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+  MERGED = 'MERGED',
+}
 
+export enum IssueState {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+}
+
+// Types End
+
+/**
+ * Get contribution summary
+ * @param param FunctionParam
+ * @returns user contribution summary
+ */
 export const getContributionSummary = async (
   param: FunctionParam
 ): Promise<ContributionSummary> => {
@@ -193,4 +218,59 @@ export const getContributionSummary = async (
     totalPullRequestReviewed:
       userResource.contributionsCollection.totalPullRequestReviewContributions,
   };
+};
+
+/**
+ * Get pull request count by state
+ * @param param FunctionParam
+ * @param state PullRequestState
+ * @returns pull request count by state
+ */
+export const getPullRequestCountByState = async (
+  param: FunctionParam,
+  state: PullRequestState
+): Promise<ResourceCount> => {
+  const { userName, githubToken } = param;
+  const query = GITHUB_PULL_REQUEST_COUNT_BY_STATE.replace(
+    NAME_PLACEHOLDER,
+    userName
+  );
+  const apiData = JSON.stringify({
+    query,
+    variables: { states: state },
+  });
+
+  const response = await API_CLIENT.post<PullRequestCount>('', apiData, {
+    headers: { Authorization: `bearer ${githubToken}` },
+  });
+
+  const count = response.data.data.user.pullRequests.totalCount;
+
+  return { state, count };
+};
+
+/**
+ * Get issue count by state
+ * @param param FunctionParam
+ * @param state IssueState
+ * @returns pull issue count by state
+ */
+export const getIssueCountByState = async (
+  param: FunctionParam,
+  state: IssueState
+): Promise<ResourceCount> => {
+  const { userName, githubToken } = param;
+  const query = GITHUB_ISSUE_COUNT_BY_STATE.replace(NAME_PLACEHOLDER, userName);
+  const apiData = JSON.stringify({
+    query,
+    variables: { states: state },
+  });
+
+  const response = await API_CLIENT.post<IssueCount>('', apiData, {
+    headers: { Authorization: `bearer ${githubToken}` },
+  });
+
+  const count = response.data.data.user.issues.totalCount;
+
+  return { state, count };
 };
