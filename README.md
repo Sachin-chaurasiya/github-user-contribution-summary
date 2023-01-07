@@ -64,6 +64,64 @@ getUserContributionSummary();
 }
 ```
 
+#### Pull Request Count
+
+```js
+import { getPullRequestCountByState } from 'github-user-contribution-summary'
+
+const getPullRequestCount = async () => {
+  try {
+    const data = await getPullRequestCountByState(
+      {
+        userName: 'Sachin-chaurasiya',
+        githubToken: '',
+      },
+      'MERGED'
+    );
+
+    console.log(data);
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+
+getPullRequestCount();
+
+// Output
+
+{ state: 'MERGED', count: 671 }
+
+```
+
+#### Issue Count
+
+```js
+import { getIssueCountByState } from 'github-user-contribution-summary'
+
+const getIssueCount = async () => {
+  try {
+    const data = await getIssueCountByState(
+      {
+        userName: 'Sachin-chaurasiya',
+        githubToken: '',
+      },
+      'CLOSED'
+    );
+
+    console.log(data);
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+
+getIssueCount();
+
+// Output
+
+{ state: 'CLOSED', count: 301 }
+
+```
+
 ### With CommonJs
 
 #### ContributionSummary
