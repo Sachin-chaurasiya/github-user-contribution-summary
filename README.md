@@ -199,3 +199,13 @@ getUserContributionSummary();
     "totalPullRequestReviewed": 604
 }
 ```
+
+## Contributors
+
+We ❤️ all contributions, big and small! Check out our [CONTRIBUTING](./CONTRIBUTING.md) guide to get started and let us know how we can help.
+
+Don't want to miss anything? Give the project a ⭐ 🚀 
+
+A HUGE THANK YOU to all our supporters!
+
+[![Stargazers repo roster for @Sachin-chaurasiya/github-user-contribution-summary](https://reporoster.com/stars/Sachin-chaurasiya/github-user-contribution-summary)](https://github.com/Sachin-chaurasiya/github-user-contribution-summary/stargazers)
