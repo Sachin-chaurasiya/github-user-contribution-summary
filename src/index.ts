@@ -109,6 +109,8 @@ export interface SummaryOverview {
   totalGists: number;
   totalFollowers: number;
   totalPullRequestReviewed: number;
+  popularRepositories: PinnedItemNode[];
+  contributedOrganizations: OrganizationNode[];
 }
 
 export interface UserContribution
@@ -217,6 +219,10 @@ export const getContributionSummary = async (
     totalFollowers: userResource.followers.totalCount,
     totalPullRequestReviewed:
       userResource.contributionsCollection.totalPullRequestReviewContributions,
+    popularRepositories: userResource.pinnedItems.nodes,
+    contributedOrganizations: userResource.organizations.edges.map(
+      (edge) => edge.node
+    ),
   };
 };
 
