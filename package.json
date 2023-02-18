@@ -1,6 +1,6 @@
 {
   "name": "github-user-contribution-summary",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A library with utilities to get the GitHub user contribution summary by username.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
