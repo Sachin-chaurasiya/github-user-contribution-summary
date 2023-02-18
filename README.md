@@ -200,12 +200,55 @@ getUserContributionSummary();
 }
 ```
 
+## How to Set up `github-user-contribution-summary` for Development?
+
+Before starting, please check the [Contribution Guide](./CONTRIBUTING.md) to get started.
+
+### Fork and Clone the Repo
+
+First, you need to fork the `github-user-contribution-summary` repo. You can do this by clicking the `Fork` button on the top right corner of the repo. If you are new to forking, please watch this [YouTube Guide](https://www.youtube.com/watch?v=h8suY-Osn8Q) to get started.
+
+Once forked, you can clone the repo by clicking the `Clone or Download` button on the top right corner of the forked repo.
+
+Please change the directory after cloning the repository using the `cd <folder-name>` command.
+
+### Install Dependencies
+
+Next, install the dependencies by running the following command in the `github-user-contribution-summary` repo:
+
+```bash
+npm install
+```
+
+Or
+
+```bash
+yarn install
+```
+
+
+### Build the package
+
+Use the following command to build the package:
+
+```bash
+npm run build
+```
+
+Or
+
+```bash
+yarn build
+```
+
+It builds the package for production to the `lib` folder.
+
 ## Contributors
 
-We ❤️ all contributions, big and small! Check out our [CONTRIBUTING](./CONTRIBUTING.md) guide to get started and let us know how we can help.
+We value all contributions, no matter their size! To get started, please refer to our [CONTRIBUTING](./CONTRIBUTING.md) guide, and don't hesitate to reach out to us for any assistance you may need.
 
-Don't want to miss anything? Give the project a ⭐ 🚀 
+If you don't want to miss any updates, please show your support by giving the project a ⭐ 🚀.
 
-A HUGE THANK YOU to all our supporters!
+We extend a massive THANK YOU to all our supporters!
 
 [![Stargazers repo roster for @Sachin-chaurasiya/github-user-contribution-summary](https://reporoster.com/stars/Sachin-chaurasiya/github-user-contribution-summary)](https://github.com/Sachin-chaurasiya/github-user-contribution-summary/stargazers)
