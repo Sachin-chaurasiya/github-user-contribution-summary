@@ -29,14 +29,35 @@ export interface ContributionCalendar {
   weeks: ContributionWeeks[];
 }
 
+enum ContributionResource {
+  PULL_REQUEST = 'pullRequest',
+  ISSUE = 'issue',
+}
+
+export interface ContributionsNodeResource {
+  url: string;
+  title: string;
+  repository: {
+    nameWithOwner: string;
+    url: string;
+    isPrivate: boolean;
+  };
+}
+
+interface Contributions<T extends ContributionResource> {
+  totalCount: number;
+  nodes: {
+    [K in T]: ContributionsNodeResource;
+  }[];
+}
+
 export interface ContributionsCollection {
   contributionCalendar: ContributionCalendar;
   totalRepositoryContributions: number;
   totalPullRequestReviewContributions: number;
-  commitContributionsByRepository: CommitContributionsByRepository[];
-  pullRequestContributionsByRepository: PullRequestContributionsByRepository[];
-  pullRequestReviewContributionsByRepository: PullRequestReviewContributionsByRepository[];
-  issueContributionsByRepository: IssueContributionsByRepository[];
+  pullRequestContributions: Contributions<ContributionResource.PULL_REQUEST>;
+  pullRequestReviewContributions: Contributions<ContributionResource.PULL_REQUEST>;
+  issueContributions: Contributions<ContributionResource.ISSUE>;
 }
 
 export interface LanguageEdgeNode {
@@ -88,80 +109,6 @@ export interface UserOrganizations {
     node: OrganizationNode;
   }[];
 }
-
-export interface CommitContributionsByRepository {
-  repository: {
-    nameWithOwner: string;
-    url: string;
-    isPrivate: boolean;
-  };
-  contributions: {
-    totalCount: number;
-  };
-}
-
-export interface PullRequestContributionsByRepository {
-  repository: {
-    nameWithOwner: string;
-    url: string;
-    isPrivate: boolean;
-  };
-  contributions: {
-    totalCount: number;
-    nodes: Array<{
-      pullRequest: {
-        url: string;
-        title: string;
-        repository: {
-          nameWithOwner: string;
-          url: string;
-        };
-      };
-    }>;
-  };
-}
-
-export interface PullRequestReviewContributionsByRepository {
-  repository: {
-    nameWithOwner: string;
-    url: string;
-    isPrivate: boolean;
-  };
-  contributions: {
-    totalCount: number;
-    nodes: Array<{
-      pullRequest: {
-        url: string;
-        title: string;
-        repository: {
-          nameWithOwner: string;
-          url: string;
-        };
-      };
-    }>;
-  };
-}
-
-export interface IssueContributionsByRepository {
-  repository: {
-    nameWithOwner: string;
-    url: string;
-    isPrivate: boolean;
-  };
-  contributions: {
-    totalCount: number;
-    nodes: Array<{
-      issue: {
-        title: string;
-        repository: {
-          nameWithOwner: string;
-          url: string;
-        };
-        url: string;
-      };
-    }>;
-  };
-}
 export interface GithubUserResource {
   data: {
     user: {
@@ -200,6 +147,14 @@ export interface SummaryOverview {
     websiteUrl: string;
     twitterUsername: string;
   };
+  contributionDistribution: {
+    pullRequest: number;
+    pullRequestReview: number;
+    issue: number;
+  };
+  latestPullRequestContributions: ContributionsNodeResource[];
+  latestPullRequestReviewContributions: ContributionsNodeResource[];
+  latestIssueContributions: ContributionsNodeResource[];
 }
 
 export interface UserContribution
@@ -290,6 +245,13 @@ export const getContributionSummary = async (
   const contributionsCollection = userResource.contributionsCollection;
   const contributionCalendar = contributionsCollection.contributionCalendar;
 
+  const pullRequestContribution =
+    contributionsCollection.pullRequestContributions;
+  const pullRequestReviewContribution =
+    contributionsCollection.pullRequestReviewContributions;
+
+  const issueContribution = contributionsCollection.issueContributions;
+
   const contributionDays: ContributionDays[] =
     contributionCalendar.weeks.reduce((prev, curr) => {
       return [...prev, ...curr.contributionDays];
@@ -318,6 +280,17 @@ export const getContributionSummary = async (
       websiteUrl: userResource.websiteUrl,
       twitterUsername: userResource.twitterUsername,
     },
+    contributionDistribution: {
+      pullRequest: pullRequestContribution.totalCount,
+      pullRequestReview: pullRequestReviewContribution.totalCount,
+      issue: issueContribution.totalCount,
+    },
+    latestPullRequestContributions: pullRequestContribution.nodes.map(
+      (node) => node.pullRequest
+    ),
+    latestPullRequestReviewContributions:
+      pullRequestReviewContribution.nodes.map((node) => node.pullRequest),
+    latestIssueContributions: issueContribution.nodes.map((node) => node.issue),
   };
 };
 
