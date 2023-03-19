@@ -16,6 +16,76 @@ export const GITHUB_USER_RESOURCE_QUERY = `query GetUserResourceInfo {
       }
       totalRepositoryContributions
       totalPullRequestReviewContributions
+      commitContributionsByRepository(maxRepositories: 15) {
+        repository {
+          nameWithOwner
+          url
+          isPrivate
+        }
+        contributions {
+          totalCount
+        }
+      }
+      pullRequestContributionsByRepository(maxRepositories: 15) {
+        repository {
+          nameWithOwner
+          url
+          isPrivate
+        }
+        contributions(first: 10) {
+          totalCount
+          nodes {
+            pullRequest {
+              url
+              title
+              repository {
+                nameWithOwner
+                url
+              }
+            }
+          }
+        }
+      }
+      pullRequestReviewContributionsByRepository(maxRepositories: 15) {
+        repository {
+          nameWithOwner
+          url
+          isPrivate
+        }
+        contributions(first: 10) {
+          totalCount
+          nodes {
+            pullRequest {
+              url
+              title
+              repository {
+                nameWithOwner
+                url
+              }
+            }
+          }
+        }
+      }
+      issueContributionsByRepository(maxRepositories: 15) {
+        repository {
+          nameWithOwner
+          url
+          isPrivate
+        }
+        contributions(first: 10) {
+          totalCount
+          nodes {
+            issue {
+              title
+              repository {
+                nameWithOwner
+                url
+              }
+              url
+            }
+          }
+        }
+      }
     }
     pinnedItems(first: 10) {
       totalCount
@@ -25,6 +95,8 @@ export const GITHUB_USER_RESOURCE_QUERY = `query GetUserResourceInfo {
           description
           nameWithOwner
           url
+          stargazerCount
+          forkCount
           primaryLanguage {
             name
             color
@@ -72,6 +144,10 @@ export const GITHUB_USER_RESOURCE_QUERY = `query GetUserResourceInfo {
         }
       }
     }
+    avatarUrl
+    bio
+    websiteUrl
+    twitterUsername
   }
 }`;
 

@@ -33,6 +33,10 @@ export interface ContributionsCollection {
   contributionCalendar: ContributionCalendar;
   totalRepositoryContributions: number;
   totalPullRequestReviewContributions: number;
+  commitContributionsByRepository: CommitContributionsByRepository[];
+  pullRequestContributionsByRepository: PullRequestContributionsByRepository[];
+  pullRequestReviewContributionsByRepository: PullRequestReviewContributionsByRepository[];
+  issueContributionsByRepository: IssueContributionsByRepository[];
 }
 
 export interface LanguageEdgeNode {
@@ -53,6 +57,8 @@ export interface PinnedItemNode {
   description: string;
   nameWithOwner: string;
   url: string;
+  stargazerCount: number;
+  forkCount: number;
   languages: Language;
   visibility: string;
   primaryLanguage: {
@@ -83,6 +89,79 @@ export interface UserOrganizations {
   }[];
 }
 
+export interface CommitContributionsByRepository {
+  repository: {
+    nameWithOwner: string;
+    url: string;
+    isPrivate: boolean;
+  };
+  contributions: {
+    totalCount: number;
+  };
+}
+
+export interface PullRequestContributionsByRepository {
+  repository: {
+    nameWithOwner: string;
+    url: string;
+    isPrivate: boolean;
+  };
+  contributions: {
+    totalCount: number;
+    nodes: Array<{
+      pullRequest: {
+        url: string;
+        title: string;
+        repository: {
+          nameWithOwner: string;
+          url: string;
+        };
+      };
+    }>;
+  };
+}
+
+export interface PullRequestReviewContributionsByRepository {
+  repository: {
+    nameWithOwner: string;
+    url: string;
+    isPrivate: boolean;
+  };
+  contributions: {
+    totalCount: number;
+    nodes: Array<{
+      pullRequest: {
+        url: string;
+        title: string;
+        repository: {
+          nameWithOwner: string;
+          url: string;
+        };
+      };
+    }>;
+  };
+}
+
+export interface IssueContributionsByRepository {
+  repository: {
+    nameWithOwner: string;
+    url: string;
+    isPrivate: boolean;
+  };
+  contributions: {
+    totalCount: number;
+    nodes: Array<{
+      issue: {
+        title: string;
+        repository: {
+          nameWithOwner: string;
+          url: string;
+        };
+        url: string;
+      };
+    }>;
+  };
+}
 export interface GithubUserResource {
   data: {
     user: {
@@ -96,6 +175,10 @@ export interface GithubUserResource {
       gists: TotalCount;
       followers: TotalCount;
       organizations: UserOrganizations;
+      avatarUrl: string;
+      bio: string;
+      websiteUrl: string;
+      twitterUsername: string;
     };
   };
 }
@@ -111,6 +194,12 @@ export interface SummaryOverview {
   totalPullRequestReviewed: number;
   popularRepositories: PinnedItemNode[];
   contributedOrganizations: OrganizationNode[];
+  personalInfo: {
+    avatarUrl: string;
+    bio: string;
+    websiteUrl: string;
+    twitterUsername: string;
+  };
 }
 
 export interface UserContribution
@@ -223,6 +312,12 @@ export const getContributionSummary = async (
     contributedOrganizations: userResource.organizations.edges.map(
       (edge) => edge.node
     ),
+    personalInfo: {
+      bio: userResource.bio,
+      avatarUrl: userResource.avatarUrl,
+      websiteUrl: userResource.websiteUrl,
+      twitterUsername: userResource.twitterUsername,
+    },
   };
 };
 
