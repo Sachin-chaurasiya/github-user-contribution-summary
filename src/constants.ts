@@ -16,72 +16,44 @@ export const GITHUB_USER_RESOURCE_QUERY = `query GetUserResourceInfo {
       }
       totalRepositoryContributions
       totalPullRequestReviewContributions
-      commitContributionsByRepository(maxRepositories: 15) {
-        repository {
-          nameWithOwner
-          url
-          isPrivate
-        }
-        contributions {
-          totalCount
-        }
-      }
-      pullRequestContributionsByRepository(maxRepositories: 15) {
-        repository {
-          nameWithOwner
-          url
-          isPrivate
-        }
-        contributions(first: 10) {
-          totalCount
-          nodes {
-            pullRequest {
+      pullRequestContributions(first: 10) {
+        totalCount
+        nodes {
+          pullRequest {
+            url
+            title
+            repository {
+              nameWithOwner
               url
-              title
-              repository {
-                nameWithOwner
-                url
-              }
+              isPrivate
             }
           }
         }
       }
-      pullRequestReviewContributionsByRepository(maxRepositories: 15) {
-        repository {
-          nameWithOwner
-          url
-          isPrivate
-        }
-        contributions(first: 10) {
-          totalCount
-          nodes {
-            pullRequest {
+      pullRequestReviewContributions(first: 10) {
+        totalCount
+        nodes {
+          pullRequest {
+            url
+            title
+            repository {
+              nameWithOwner
               url
-              title
-              repository {
-                nameWithOwner
-                url
-              }
+              isPrivate
             }
           }
         }
       }
-      issueContributionsByRepository(maxRepositories: 15) {
-        repository {
-          nameWithOwner
-          url
-          isPrivate
-        }
-        contributions(first: 10) {
-          totalCount
-          nodes {
-            issue {
-              title
-              repository {
-                nameWithOwner
-                url
-              }
+      issueContributions(first: 10) {
+        totalCount
+        nodes {
+          issue {
+            url
+            title
+            repository {
+              nameWithOwner
               url
+              isPrivate
             }
           }
         }
