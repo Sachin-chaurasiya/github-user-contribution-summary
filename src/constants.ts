@@ -16,6 +16,48 @@ export const GITHUB_USER_RESOURCE_QUERY = `query GetUserResourceInfo {
       }
       totalRepositoryContributions
       totalPullRequestReviewContributions
+      pullRequestContributions(first: 10) {
+        totalCount
+        nodes {
+          pullRequest {
+            url
+            title
+            repository {
+              nameWithOwner
+              url
+              isPrivate
+            }
+          }
+        }
+      }
+      pullRequestReviewContributions(first: 10) {
+        totalCount
+        nodes {
+          pullRequest {
+            url
+            title
+            repository {
+              nameWithOwner
+              url
+              isPrivate
+            }
+          }
+        }
+      }
+      issueContributions(first: 10) {
+        totalCount
+        nodes {
+          issue {
+            url
+            title
+            repository {
+              nameWithOwner
+              url
+              isPrivate
+            }
+          }
+        }
+      }
     }
     pinnedItems(first: 10) {
       totalCount
@@ -25,6 +67,8 @@ export const GITHUB_USER_RESOURCE_QUERY = `query GetUserResourceInfo {
           description
           nameWithOwner
           url
+          stargazerCount
+          forkCount
           primaryLanguage {
             name
             color
@@ -72,6 +116,10 @@ export const GITHUB_USER_RESOURCE_QUERY = `query GetUserResourceInfo {
         }
       }
     }
+    avatarUrl
+    bio
+    websiteUrl
+    twitterUsername
   }
 }`;
 

@@ -29,10 +29,35 @@ export interface ContributionCalendar {
   weeks: ContributionWeeks[];
 }
 
+enum ContributionResource {
+  PULL_REQUEST = 'pullRequest',
+  ISSUE = 'issue',
+}
+
+export interface ContributionsNodeResource {
+  url: string;
+  title: string;
+  repository: {
+    nameWithOwner: string;
+    url: string;
+    isPrivate: boolean;
+  };
+}
+
+interface Contributions<T extends ContributionResource> {
+  totalCount: number;
+  nodes: {
+    [K in T]: ContributionsNodeResource;
+  }[];
+}
+
 export interface ContributionsCollection {
   contributionCalendar: ContributionCalendar;
   totalRepositoryContributions: number;
   totalPullRequestReviewContributions: number;
+  pullRequestContributions: Contributions<ContributionResource.PULL_REQUEST>;
+  pullRequestReviewContributions: Contributions<ContributionResource.PULL_REQUEST>;
+  issueContributions: Contributions<ContributionResource.ISSUE>;
 }
 
 export interface LanguageEdgeNode {
@@ -53,6 +78,8 @@ export interface PinnedItemNode {
   description: string;
   nameWithOwner: string;
   url: string;
+  stargazerCount: number;
+  forkCount: number;
   languages: Language;
   visibility: string;
   primaryLanguage: {
@@ -82,7 +109,6 @@ export interface UserOrganizations {
     node: OrganizationNode;
   }[];
 }
-
 export interface GithubUserResource {
   data: {
     user: {
@@ -96,6 +122,10 @@ export interface GithubUserResource {
       gists: TotalCount;
       followers: TotalCount;
       organizations: UserOrganizations;
+      avatarUrl: string;
+      bio: string;
+      websiteUrl: string;
+      twitterUsername: string;
     };
   };
 }
@@ -111,6 +141,20 @@ export interface SummaryOverview {
   totalPullRequestReviewed: number;
   popularRepositories: PinnedItemNode[];
   contributedOrganizations: OrganizationNode[];
+  personalInfo: {
+    avatarUrl: string;
+    bio: string;
+    websiteUrl: string;
+    twitterUsername: string;
+  };
+  contributionDistribution: {
+    pullRequest: number;
+    pullRequestReview: number;
+    issue: number;
+  };
+  latestPullRequestContributions: ContributionsNodeResource[];
+  latestPullRequestReviewContributions: ContributionsNodeResource[];
+  latestIssueContributions: ContributionsNodeResource[];
 }
 
 export interface UserContribution
@@ -201,6 +245,13 @@ export const getContributionSummary = async (
   const contributionsCollection = userResource.contributionsCollection;
   const contributionCalendar = contributionsCollection.contributionCalendar;
 
+  const pullRequestContribution =
+    contributionsCollection.pullRequestContributions;
+  const pullRequestReviewContribution =
+    contributionsCollection.pullRequestReviewContributions;
+
+  const issueContribution = contributionsCollection.issueContributions;
+
   const contributionDays: ContributionDays[] =
     contributionCalendar.weeks.reduce((prev, curr) => {
       return [...prev, ...curr.contributionDays];
@@ -223,6 +274,23 @@ export const getContributionSummary = async (
     contributedOrganizations: userResource.organizations.edges.map(
       (edge) => edge.node
     ),
+    personalInfo: {
+      bio: userResource.bio,
+      avatarUrl: userResource.avatarUrl,
+      websiteUrl: userResource.websiteUrl,
+      twitterUsername: userResource.twitterUsername,
+    },
+    contributionDistribution: {
+      pullRequest: pullRequestContribution.totalCount,
+      pullRequestReview: pullRequestReviewContribution.totalCount,
+      issue: issueContribution.totalCount,
+    },
+    latestPullRequestContributions: pullRequestContribution.nodes.map(
+      (node) => node.pullRequest
+    ),
+    latestPullRequestReviewContributions:
+      pullRequestReviewContribution.nodes.map((node) => node.pullRequest),
+    latestIssueContributions: issueContribution.nodes.map((node) => node.issue),
   };
 };
 
