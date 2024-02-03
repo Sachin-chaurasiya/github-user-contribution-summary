@@ -6,7 +6,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "release": "npm version patch && sh ./release && npm publish"
   },
   "repository": {
     "type": "git",
