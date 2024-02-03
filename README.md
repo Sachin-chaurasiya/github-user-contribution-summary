@@ -251,4 +251,4 @@ If you don't want to miss any updates, please show your support by giving the pr
 
 We extend a massive THANK YOU to all our supporters!
 
-[![Stargazers repo roster for @Sachin-chaurasiya/github-user-contribution-summary](https://reporoster.com/stars/Sachin-chaurasiya/github-user-contribution-summary)](https://github.com/Sachin-chaurasiya/github-user-contribution-summary/stargazers)
+[![Stargazers repo roster for @Sachin-chaurasiya/github-user-contribution-summary](http://reporoster.com/stars/Sachin-chaurasiya/github-user-contribution-summary)](https://github.com/Sachin-chaurasiya/github-user-contribution-summary/stargazers)
